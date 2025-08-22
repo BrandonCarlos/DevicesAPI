@@ -49,12 +49,28 @@ public class Device {
         return creationTime;
     }
 
-    public void update(Map<String, Object> fields) {
+    public void update(Device updatedDevice) {
+        if (this.state == DeviceState.IN_USE &&
+                (!this.name.equals(updatedDevice.name) || !this.brand.equals(updatedDevice.brand))) {
+            throw new InvalidOperationException("Cannot update name or brand of a device that is in use");
+        }
+
+        if (!this.creationTime.equals(updatedDevice.creationTime)) {
+            throw new InvalidOperationException("Creation time cannot be updated");
+        }
+
+        // Apply updates
+        this.name = updatedDevice.name;
+        this.brand = updatedDevice.brand;
+        this.state = updatedDevice.state;
+    }
+
+    // Partial update (patch)
+    public void patch(Map<String, Object> fields) {
         if (state == DeviceState.IN_USE &&
                 (fields.containsKey("name") || fields.containsKey("brand"))) {
             throw new InvalidOperationException("Cannot update name/brand of device in use");
         }
-
         for (var entry : fields.entrySet()) {
             switch (entry.getKey()) {
                 case "name" -> this.name = (String) entry.getValue();
@@ -66,9 +82,10 @@ public class Device {
         }
     }
 
+    // Domain validation for deletion
     public void validateDeletion() {
         if (this.state == DeviceState.IN_USE) {
-            throw new InvalidOperationException("Cannot delete a device in use");
+            throw new InvalidOperationException("In-use devices cannot be deleted");
         }
     }
 }
