@@ -28,3 +28,15 @@ spring:
     metrics:
       tags:
         application: devices-api
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,prometheus
+  endpoint:
+    prometheus:
+      enabled: true
+  metrics:
+    tags:
+      application: ${spring.application.name}
