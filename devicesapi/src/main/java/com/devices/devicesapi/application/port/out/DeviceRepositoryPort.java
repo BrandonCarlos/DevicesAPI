@@ -2,6 +2,7 @@ package com.devices.devicesapi.application.port.out;
 
 import com.devices.devicesapi.domain.model.Device;
 import com.devices.devicesapi.domain.model.DeviceState;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 import java.util.Optional;
