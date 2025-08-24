@@ -29,25 +29,11 @@ public class Device {
         this.creationTime = creationTime;
     }
 
-    public UUID getId() {
-        return id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getBrand() {
-        return brand;
-    }
-
-    public DeviceState getState() {
-        return state;
-    }
-
-    public LocalDateTime getCreationTime() {
-        return creationTime;
-    }
+    public UUID getId() { return id; }
+    public String getName() { return name; }
+    public String getBrand() { return brand; }
+    public DeviceState getState() { return state; }
+    public LocalDateTime getCreationTime() { return creationTime; }
 
     public void update(Device updatedDevice) {
         if (this.state == DeviceState.IN_USE &&
