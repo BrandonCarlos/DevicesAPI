@@ -1,7 +1,8 @@
-package com.techlogy.devices.application.port.in;
+package com.devices.devicesapi.application.port.in;
 
-import com.techlogy.devices.application.dto.DeviceResponse;
-import com.techlogy.devices.infrastructure.adapter.in.rest.dto.DeviceRequest;
+
+import com.devices.devicesapi.application.dto.DeviceResponse;
+import com.devices.devicesapi.infrastructure.adapter.in.rest.dto.DeviceRequest;
 
 import java.util.Map;
 import java.util.UUID;

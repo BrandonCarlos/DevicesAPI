@@ -1,7 +1,7 @@
-package com.techlogy.devices.application.port.in;
+package com.devices.devicesapi.application.port.in;
 
-import com.techlogy.devices.application.dto.DeviceRequest;
-import com.techlogy.devices.application.dto.DeviceResponse;
+import com.devices.devicesapi.application.dto.DeviceRequest;
+import com.devices.devicesapi.application.dto.DeviceResponse;
 
 public interface CreateDeviceUseCase {
     DeviceResponse create(DeviceRequest request);
