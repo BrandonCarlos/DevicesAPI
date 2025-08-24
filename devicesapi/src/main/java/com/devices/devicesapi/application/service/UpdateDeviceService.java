@@ -1,22 +1,22 @@
-package com.techlogy.devices.application.service;
+package com.devices.devicesapi.application.service;
 
-import com.techlogy.devices.application.dto.DeviceResponse;
-import com.techlogy.devices.application.port.in.UpdateDeviceUseCase;
-import com.techlogy.devices.application.port.out.DeviceRepositoryPort;
-import com.techlogy.devices.domain.exception.InvalidOperationException;
-import com.techlogy.devices.domain.exception.NotFoundException;
-import com.techlogy.devices.domain.model.Device;
-import com.techlogy.devices.domain.model.DeviceState;
-import com.techlogy.devices.infrastructure.adapter.in.rest.dto.DeviceRequest;
+import com.devices.devicesapi.application.dto.DeviceResponse;
+import com.devices.devicesapi.application.port.in.UpdateDeviceUseCase;
+import com.devices.devicesapi.application.port.out.DeviceRepositoryPort;
+import com.devices.devicesapi.domain.exception.InvalidOperationException;
+import com.devices.devicesapi.domain.exception.NotFoundException;
+import com.devices.devicesapi.domain.model.Device;
+import com.devices.devicesapi.domain.model.DeviceState;
+import com.devices.devicesapi.infrastructure.adapter.in.rest.dto.DeviceRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import static com.techlogy.devices.application.service.DeviceMapper.toResponse;
+import static com.devices.devicesapi.application.service.DeviceMapper.toResponse;
+
 
 @Service
 @RequiredArgsConstructor
@@ -29,7 +29,6 @@ public class UpdateDeviceService implements UpdateDeviceUseCase {
         Device existingDevice = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Device not found"));
 
-        // Create a new Device object with updated fields but keep id and creationTime from existing device
         Device updatedDevice = new Device(
                 id,
                 request.getName(),
@@ -38,10 +37,8 @@ public class UpdateDeviceService implements UpdateDeviceUseCase {
                 existingDevice.getCreationTime()
         );
 
-        // Delegate the update and validation logic to the Device entity
         existingDevice.update(updatedDevice);
 
-        // Save the updated device and convert to response DTO
         return toResponse(repository.save(existingDevice));
     }
 
@@ -50,13 +47,11 @@ public class UpdateDeviceService implements UpdateDeviceUseCase {
         Device device = repository.findById(id)
                 .orElseThrow(() -> new NotFoundException("Device not found"));
 
-        // Extract current values
         String name = device.getName();
         String brand = device.getBrand();
         DeviceState state = device.getState();
         LocalDateTime creationTime = device.getCreationTime();
 
-        // Override with updates if present
         if (updates.containsKey("name")) {
             name = (String) updates.get("name");
         }
@@ -70,13 +65,10 @@ public class UpdateDeviceService implements UpdateDeviceUseCase {
             throw new InvalidOperationException("Cannot update creation time");
         }
 
-        // Build new Device with updated data
         Device updatedDevice = new Device(device.getId(), name, brand, state, creationTime);
 
-        // Delegate validation & update to the domain model
         device.update(updatedDevice);
 
-        // Save and return
         return toResponse(repository.save(device));
     }
 }
