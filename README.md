@@ -279,8 +279,8 @@ Content-Type: application/json
 
 {
   "name": "Smart Sensor",
-  "type": "IoT",
-  "status": "in-use"
+  "brand": "IoT",
+  "state": "in-use"
 }
 📤 Response
 json
@@ -288,8 +288,8 @@ Copy code
 {
   "id": "uuid",
   "name": "Smart Sensor",
-  "type": "IoT",
-  "status": "in-use",
+  "brand": "IoT",
+  "state": "in-use",
   "createdAt": "2025-08-24T15:00:00Z"
 }
 🔁 Other Endpoints
