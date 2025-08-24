@@ -40,6 +40,127 @@ The application is structured using the following principles:
 
 ---
 
+📱 Device Management API
+
+This API allows you to manage devices through basic CRUD operations. Below are the available endpoints with request and response examples.
+
+🔹 POST / Create a Device
+
+Endpoint:
+POST http://localhost:8080/api/devices
+
+Request Body:
+
+{
+  "name": "Device C",
+  "brand": "Apple",
+  "state": "AVAILABLE"
+}
+
+
+Response: 200 OK
+
+{
+  "id": "09551562-255f-48ae-9ee5-c6a2c31335bf",
+  "name": "Device C",
+  "brand": "Apple",
+  "state": "AVAILABLE",
+  "creationTime": "2025-08-24T17:13:16.195903"
+}
+
+🔹 GET / Get All Devices
+
+Endpoint:
+GET http://localhost:8080/api/devices
+
+Response: 200 OK
+(Sample Output)
+
+[
+  {
+    "id": "963fed21-d30c-4a24-8242-71150cd65bc8",
+    "name": "iPhone 15 Pro",
+    "brand": "Apple",
+    "state": "IN_USE",
+    "creationTime": "2025-08-21T20:07:22.075232"
+  },
+  ...
+]
+
+🔹 GET / Get Device by ID
+
+Endpoint:
+GET http://localhost:8080/api/devices/{id}
+
+Example:
+GET http://localhost:8080/api/devices/170e75dd-7db9-46dc-9218-29391ba2be15
+
+Response: 200 OK
+
+{
+  "id": "170e75dd-7db9-46dc-9218-29391ba2be15",
+  "name": "Device C",
+  "brand": "Apple",
+  "state": "AVAILABLE",
+  "creationTime": "2025-08-24T17:15:11.073007"
+}
+
+🔹 GET / Get Devices by Brand
+
+Endpoint:
+GET http://localhost:8080/api/devices?brand=Apple
+
+Response: 200 OK
+(Sample Output: Same structure as “Get All Devices” with filtered results)
+
+🔹 GET / Get Devices by State
+
+Endpoint:
+GET http://localhost:8080/api/devices?state=AVAILABLE
+
+Response: 200 OK
+(Sample Output: Same structure as “Get All Devices” with filtered results)
+
+🔹 DELETE / Delete Device by ID
+
+Endpoint:
+DELETE http://localhost:8080/api/devices/{id}
+
+Example:
+DELETE http://localhost:8080/api/devices/0d194268-9ea9-4642-a261-a7eed54f92ac
+
+Response: 204 No Content
+
+⚠️ Validation:
+Devices with state: IN_USE cannot be deleted.
+
+🔹 PATCH / Update Device State
+
+Endpoint:
+PATCH http://localhost:8080/api/devices/{id}
+
+Example:
+PATCH http://localhost:8080/api/devices/0d194268-9ea9-4642-a261-a7eed54f92ac
+
+Request Body:
+
+{
+  "state": "INACTIVE"
+}
+
+
+Response: 200 OK (with updated device object)
+
+⚠️ Validations:
+
+creationTime cannot be updated.
+
+name and brand cannot be updated if the device is IN_USE.
+
+Devices in IN_USE state cannot be deleted.
+
+---
+
 ## 🗄️ PostgreSQL – Primary Database
 
 The API uses **PostgreSQL** for data persistence.
@@ -209,122 +330,3 @@ Build project	./mvnw clean install
 Run locally	./mvnw spring-boot:run
 Run with Docker	docker-compose up --build
 Run tests	./mvnw test
-
-📱 Device Management API
-
-This API allows you to manage devices through basic CRUD operations. Below are the available endpoints with request and response examples.
-
-🔹 POST / Create a Device
-
-Endpoint:
-POST http://localhost:8080/api/devices
-
-Request Body:
-
-{
-  "name": "Device C",
-  "brand": "Apple",
-  "state": "AVAILABLE"
-}
-
-
-Response: 200 OK
-
-{
-  "id": "09551562-255f-48ae-9ee5-c6a2c31335bf",
-  "name": "Device C",
-  "brand": "Apple",
-  "state": "AVAILABLE",
-  "creationTime": "2025-08-24T17:13:16.195903"
-}
-
-🔹 GET / Get All Devices
-
-Endpoint:
-GET http://localhost:8080/api/devices
-
-Response: 200 OK
-(Sample Output)
-
-[
-  {
-    "id": "963fed21-d30c-4a24-8242-71150cd65bc8",
-    "name": "iPhone 15 Pro",
-    "brand": "Apple",
-    "state": "IN_USE",
-    "creationTime": "2025-08-21T20:07:22.075232"
-  },
-  ...
-]
-
-🔹 GET / Get Device by ID
-
-Endpoint:
-GET http://localhost:8080/api/devices/{id}
-
-Example:
-GET http://localhost:8080/api/devices/170e75dd-7db9-46dc-9218-29391ba2be15
-
-Response: 200 OK
-
-{
-  "id": "170e75dd-7db9-46dc-9218-29391ba2be15",
-  "name": "Device C",
-  "brand": "Apple",
-  "state": "AVAILABLE",
-  "creationTime": "2025-08-24T17:15:11.073007"
-}
-
-🔹 GET / Get Devices by Brand
-
-Endpoint:
-GET http://localhost:8080/api/devices?brand=Apple
-
-Response: 200 OK
-(Sample Output: Same structure as “Get All Devices” with filtered results)
-
-🔹 GET / Get Devices by State
-
-Endpoint:
-GET http://localhost:8080/api/devices?state=AVAILABLE
-
-Response: 200 OK
-(Sample Output: Same structure as “Get All Devices” with filtered results)
-
-🔹 DELETE / Delete Device by ID
-
-Endpoint:
-DELETE http://localhost:8080/api/devices/{id}
-
-Example:
-DELETE http://localhost:8080/api/devices/0d194268-9ea9-4642-a261-a7eed54f92ac
-
-Response: 204 No Content
-
-⚠️ Validation:
-Devices with state: IN_USE cannot be deleted.
-
-🔹 PATCH / Update Device State
-
-Endpoint:
-PATCH http://localhost:8080/api/devices/{id}
-
-Example:
-PATCH http://localhost:8080/api/devices/0d194268-9ea9-4642-a261-a7eed54f92ac
-
-Request Body:
-
-{
-  "state": "INACTIVE"
-}
-
-
-Response: 200 OK (with updated device object)
-
-⚠️ Validations:
-
-creationTime cannot be updated.
-
-name and brand cannot be updated if the device is IN_USE.
-
-Devices in IN_USE state cannot be deleted.
