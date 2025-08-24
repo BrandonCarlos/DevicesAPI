@@ -8,6 +8,7 @@ import com.devices.devicesapi.domain.exception.NotFoundException;
 import com.devices.devicesapi.domain.model.Device;
 import com.devices.devicesapi.domain.model.DeviceState;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,11 +16,12 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class DeviceService implements DeviceUseCase {
 
-    private final DeviceRepositoryPort repository;
+    @Autowired
+    private DeviceRepositoryPort repository;
 
     private static DeviceResponse toResponse(Device device) {
         return new DeviceResponse(
