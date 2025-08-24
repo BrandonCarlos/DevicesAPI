@@ -140,4 +140,51 @@ class UpdateDeviceServiceTest {
 
         verify(repository, never()).save(any());
     }
+
+    @Test
+    void patch_shouldUpdateNameOnly() {
+        Map<String, Object> updates = Map.of("name", "NewName");
+
+        existingDevice = new Device(deviceId, "OldName", "OldBrand", DeviceState.AVAILABLE, LocalDateTime.now());
+
+        when(repository.findById(deviceId)).thenReturn(Optional.of(existingDevice));
+        when(repository.save(existingDevice)).thenAnswer(i -> i.getArgument(0));
+
+        DeviceResponse response = service.patch(deviceId, updates);
+
+        assertThat(response.name()).isEqualTo("NewName");
+        assertThat(response.brand()).isEqualTo(existingDevice.getBrand());
+        verify(repository).save(existingDevice);
+    }
+
+    @Test
+    void patch_shouldUpdateBrandOnly() {
+        Map<String, Object> updates = Map.of("brand", "NewBrand");
+
+        existingDevice = new Device(deviceId, "OldName", "OldBrand", DeviceState.AVAILABLE, LocalDateTime.now());
+
+        when(repository.findById(deviceId)).thenReturn(Optional.of(existingDevice));
+        when(repository.save(existingDevice)).thenAnswer(i -> i.getArgument(0));
+
+        DeviceResponse response = service.patch(deviceId, updates);
+
+        assertThat(response.brand()).isEqualTo("NewBrand");
+        assertThat(response.name()).isEqualTo(existingDevice.getName());
+        verify(repository).save(existingDevice);
+    }
+
+    @Test
+    void patch_shouldThrowExceptionWhenUpdatingNameOrBrandOfInUseDevice() {
+        Map<String, Object> updates = Map.of(
+                "name", "NewName",
+                "brand", "NewBrand"
+        );
+
+        existingDevice = new Device(deviceId, "OldName", "OldBrand", DeviceState.IN_USE, LocalDateTime.now());
+        when(repository.findById(deviceId)).thenReturn(Optional.of(existingDevice));
+
+        assertThatThrownBy(() -> service.patch(deviceId, updates))
+                .isInstanceOf(InvalidOperationException.class)
+                .hasMessage("Cannot update name or brand of a device that is in use");
+    }
 }
