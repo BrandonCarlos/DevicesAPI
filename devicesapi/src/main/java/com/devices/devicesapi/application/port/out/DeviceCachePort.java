@@ -1,7 +1,6 @@
-package com.techlogy.devices.application.port.out;
+package com.devices.devicesapi.application.port.out;
 
-import com.techlogy.devices.application.dto.DeviceResponse;
-import com.techlogy.devices.domain.model.Device;
+import com.devices.devicesapi.domain.model.Device;
 
 import java.util.Optional;
 import java.util.UUID;

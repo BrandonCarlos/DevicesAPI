@@ -1,5 +1,6 @@
-package com.devices.devicesapi.application.port.out;
+package com.devices.devicesapi.infrastructure.adapter.cache;
 
+import com.devices.devicesapi.application.port.out.DeviceCachePort;
 import com.devices.devicesapi.domain.model.Device;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.redis.core.RedisTemplate;

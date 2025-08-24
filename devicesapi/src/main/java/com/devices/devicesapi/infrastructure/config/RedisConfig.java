@@ -1,4 +1,4 @@
-package com.devices.devicesapi.application.port.out;
+package com.devices.devicesapi.infrastructure.config;
 
 import com.devices.devicesapi.domain.model.Device;
 import org.springframework.context.annotation.Bean;
