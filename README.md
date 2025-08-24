@@ -201,17 +201,15 @@ spring:
 ✅ Validations
 All incoming requests are validated using Jakarta Bean Validation:
 
-java
-Copy code
 public class CreateDeviceRequest {
     @NotBlank
     private String name;
 
     @NotBlank
-    private String type;
+    private String brand;
 
     @NotNull
-    private String status;
+    private DeviceState state;
 }
 Invalid requests return descriptive error responses (400 Bad Request)
 
