@@ -1,7 +1,7 @@
-package com.techlogy.devices.application.service;
+package com.devices.devicesapi.application.service;
 
-import com.techlogy.devices.application.dto.DeviceResponse;
-import com.techlogy.devices.domain.model.Device;
+import com.devices.devicesapi.application.dto.DeviceResponse;
+import com.devices.devicesapi.domain.model.Device;
 
 public class DeviceMapper {
 
