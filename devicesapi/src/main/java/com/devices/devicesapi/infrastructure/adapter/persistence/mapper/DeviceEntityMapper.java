@@ -1,4 +1,4 @@
-package com.devices.devicesapi.infrastructure.adapter.persistence.entity.mapper;
+package com.devices.devicesapi.infrastructure.adapter.persistence.mapper;
 
 import com.devices.devicesapi.domain.model.Device;
 import com.devices.devicesapi.infrastructure.adapter.persistence.entity.DeviceEntity;
